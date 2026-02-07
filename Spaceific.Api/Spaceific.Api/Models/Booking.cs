@@ -12,8 +12,8 @@ namespace Spaceific.Api.Models
         [Required] 
         public string Room { get; set; } = string.Empty;
         [Required] 
-
         public string? Purpose { get; set; }
+
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
         public bool AllDay { get; set; }

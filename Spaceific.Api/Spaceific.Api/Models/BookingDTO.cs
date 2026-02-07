@@ -12,7 +12,7 @@ namespace Spaceific.Api.Models
         public string Room { get; set; } = string.Empty;
         [Required]
         [MaxLength(500)]
-        public string? Purpose { get; set; }
+        public string Purpose { get; set; } = string.Empty;
 
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
