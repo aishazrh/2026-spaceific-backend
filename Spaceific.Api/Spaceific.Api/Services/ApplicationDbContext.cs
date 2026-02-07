@@ -9,10 +9,6 @@ namespace Spaceific.Api.Services
         {
         }
 
-        public required DbSet<Booking> Bookings { get; set; }
-
-        protected ApplicationDbContext()
-        {
-        }
+        public required DbSet<Booking> Bookings { get; set; } = null!;
     }
 }
