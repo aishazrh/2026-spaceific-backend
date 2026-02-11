@@ -10,6 +10,7 @@ namespace Spaceific.Api.Services
         }
 
         public required DbSet<Booking> Bookings { get; set; } = null!;
+        public DbSet<Room> Rooms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,8 +63,45 @@ namespace Spaceific.Api.Services
                     UpdatedAt = new DateTime(2026, 2, 7, 13, 47, 18)
                 }
             );
-        }
 
-        public DbSet<Room> Rooms { get; set; }
+            modelBuilder.Entity<Room>().HasData(
+                new Room
+                {
+                    Id = 1,
+                    Name = "B-102",
+                    Building = "D4",
+                    Capacity = 30,
+                    CreatedAt = new DateTime(2026, 2, 11, 22, 52, 0),
+                    UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
+                },
+                new Room
+                {
+                    Id = 2,
+                    Name = "HH-103",
+                    Building = "D3",
+                    Capacity = 30,
+                    CreatedAt = new DateTime(2026, 2, 11, 22, 52, 0),
+                    UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
+                },
+                new Room
+                {
+                    Id = 3,
+                    Name = "SAW-0201",
+                    Building = "SAW",
+                    Capacity = 100,
+                    CreatedAt = new DateTime(2026, 2, 11, 22, 52, 0),
+                    UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
+                },
+                new Room
+                {
+                    Id = 4,
+                    Name = "PS-0105",
+                    Building = "Pascasarjana",
+                    Capacity = 50,
+                    CreatedAt = new DateTime(2026, 2, 11, 22, 52, 0),
+                    UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
+                }
+            );
+        }
     }
 }
