@@ -63,5 +63,7 @@ namespace Spaceific.Api.Services
                 }
             );
         }
+
+        public DbSet<Room> Rooms { get; set; }
     }
 }
