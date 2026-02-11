@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Spaceific.Api.Models;
 using Spaceific.Api.Services;
 
@@ -86,6 +87,21 @@ namespace Spaceific.Api.Controllers
             context.SaveChanges();
             return NoContent();
         }
+
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateBookingStatusDto dto)
+        {
+            var booking = await context.Bookings.FindAsync(id);
+            if (booking == null)
+                return NotFound();
+
+            booking.Status = dto.Status; // "Approved" / "Rejected"
+            booking.UpdatedAt = DateTime.UtcNow;
+
+            await context.SaveChangesAsync();
+            return Ok(booking);
+        }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteBooking(int id) 

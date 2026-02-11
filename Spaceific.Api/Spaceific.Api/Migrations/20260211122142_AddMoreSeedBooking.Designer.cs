@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spaceific.Api.Services;
 
@@ -11,9 +12,11 @@ using Spaceific.Api.Services;
 namespace Spaceific.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260211122142_AddMoreSeedBooking")]
+    partial class AddMoreSeedBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +86,7 @@ namespace Spaceific.Api.Migrations
                             IsDeleted = false,
                             LastName = "Pratama",
                             Purpose = "Rapat divisi IT",
-                            Room = "HH-203",
+                            Room = "R.301",
                             Start = new DateTime(2026, 2, 7, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Pending",
                             UpdatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -98,7 +101,7 @@ namespace Spaceific.Api.Migrations
                             IsDeleted = false,
                             LastName = "Aisyah",
                             Purpose = "Presentasi proyek PBL",
-                            Room = "B-304",
+                            Room = "R.205",
                             Start = new DateTime(2026, 2, 8, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Approved",
                             UpdatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -113,7 +116,7 @@ namespace Spaceific.Api.Migrations
                             IsDeleted = false,
                             LastName = "Kusuma",
                             Purpose = "Pelatihan editing video",
-                            Room = "SAW-0608",
+                            Room = "Lab Multimedia",
                             Start = new DateTime(2026, 2, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Rejected",
                             UpdatedAt = new DateTime(2026, 2, 7, 13, 47, 18, 0, DateTimeKind.Unspecified)

@@ -21,4 +21,9 @@ namespace Spaceific.Api.Models
         [Required] 
         public string Status { get; set; } = "Pending";
     }
+    public class UpdateBookingStatusDto
+    {
+        public string Status { get; set; } = string.Empty;
+    }
+
 }

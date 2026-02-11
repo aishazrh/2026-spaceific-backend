@@ -21,7 +21,7 @@ namespace Spaceific.Api.Services
                     Id = 1,
                     FirstName = "Andi",
                     LastName = "Pratama",
-                    Room = "R.301",
+                    Room = "HH-203",
                     Purpose = "Rapat divisi IT",
                     Start = new DateTime(2026, 2, 7, 9, 0, 0),
                     End = new DateTime(2026, 2, 7, 11, 0, 0),
@@ -36,7 +36,7 @@ namespace Spaceific.Api.Services
                     Id = 2,
                     FirstName = "Siti",
                     LastName = "Aisyah",
-                    Room = "R.205",
+                    Room = "B-304",
                     Purpose = "Presentasi proyek PBL",
                     Start = new DateTime(2026, 2, 8, 13, 0, 0),
                     End = new DateTime(2026, 2, 8, 15, 0, 0),
@@ -45,6 +45,21 @@ namespace Spaceific.Api.Services
                     IsDeleted = false,
                     CreatedAt = new DateTime(2026, 2, 7),
                     UpdatedAt = new DateTime(2026, 2, 7)
+                },
+                new Booking
+                {
+                    Id = 3,
+                    FirstName = "Rina",
+                    LastName = "Kusuma",
+                    Room = "SAW-0608",
+                    Purpose = "Pelatihan editing video",
+                    Start = new DateTime(2026, 2, 10, 10, 0, 0),
+                    End = new DateTime(2026, 2, 10, 12, 0, 0),
+                    AllDay = false,
+                    Status = "Rejected",
+                    IsDeleted = false,
+                    CreatedAt = new DateTime(2026, 2, 7, 13, 47, 18),
+                    UpdatedAt = new DateTime(2026, 2, 7, 13, 47, 18)
                 }
             );
         }
