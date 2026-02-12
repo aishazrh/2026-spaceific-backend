@@ -104,6 +104,31 @@ namespace Spaceific.Api.Services
                     UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
                 }
             );
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    FirstName = "Admin",
+                    LastName = "Spaceific",
+                    Username = "admin",
+                    PasswordHash = "$2a$12$KeFN2k184BuqvUQgshTLROC4CPp6vLkTK.8Z/RBoOepPUAYU1/lTe",
+                    Role = "Admin",
+                    CreatedAt = new DateTime(2026, 2, 11, 10, 0, 0),
+                    UpdatedAt = new DateTime(2026, 2, 11, 10, 0, 0)
+                },
+                new User
+                {
+                    Id = 2,
+                    FirstName = "User",
+                    LastName = "Demo",
+                    Username = "user",
+                    PasswordHash = "$2a$12$BKl1PPsOhkmvqCXfOQ57A.Bzgql0zcND2voJBsEUS.fyGZanjmej2",
+                    Role = "User",
+                    CreatedAt = new DateTime(2026, 2, 11, 10, 0, 0),
+                    UpdatedAt = new DateTime(2026, 2, 11, 10, 0, 0)
+                }
+            );
         }
     }
 }
