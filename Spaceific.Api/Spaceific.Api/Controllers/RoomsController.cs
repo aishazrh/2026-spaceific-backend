@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spaceific.Api.Models;
 using Spaceific.Api.Services;
@@ -16,6 +17,7 @@ namespace Spaceific.Api.Controllers
             this.context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetRooms()
         {
@@ -37,6 +39,7 @@ namespace Spaceific.Api.Controllers
             return Ok(room);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateRoom([FromBody] RoomDTO dto)
         {
@@ -57,6 +60,7 @@ namespace Spaceific.Api.Controllers
             return Ok(room);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult UpdateRoom(int id, [FromBody] RoomDTO dto)
         {
@@ -73,6 +77,7 @@ namespace Spaceific.Api.Controllers
             return Ok(room);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteRoom(int id)
         {
