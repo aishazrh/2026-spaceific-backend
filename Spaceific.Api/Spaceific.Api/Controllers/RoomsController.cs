@@ -38,11 +38,14 @@ namespace Spaceific.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRoom(RoomDTO dto)
+        public IActionResult CreateRoom([FromBody] RoomDTO dto)
         {
+            Console.WriteLine("BUILDING = " + dto.Building);
+
             var room = new Room
             {
                 Name = dto.Name,
+                Building = dto.Building,
                 Capacity = dto.Capacity,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -55,13 +58,14 @@ namespace Spaceific.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateRoom(int id, RoomDTO dto)
+        public IActionResult UpdateRoom(int id, [FromBody] RoomDTO dto)
         {
             var room = context.Rooms.FirstOrDefault(r => r.Id == id && !r.IsDeleted);
             if (room == null)
                 return NotFound();
 
             room.Name = dto.Name;
+            room.Building = dto.Building;
             room.Capacity = dto.Capacity;
             room.UpdatedAt = DateTime.UtcNow;
 
