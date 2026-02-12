@@ -12,6 +12,8 @@ namespace Spaceific.Api.Services
         public required DbSet<Booking> Bookings { get; set; } = null!;
         public DbSet<Room> Rooms { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
