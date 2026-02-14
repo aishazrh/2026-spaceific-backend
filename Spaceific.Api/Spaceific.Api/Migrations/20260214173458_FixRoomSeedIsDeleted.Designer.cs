@@ -12,8 +12,8 @@ using Spaceific.Api.Services;
 namespace Spaceific.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260211155135_AddSeedRoom")]
-    partial class AddSeedRoom
+    [Migration("20260214173458_FixRoomSeedIsDeleted")]
+    partial class FixRoomSeedIsDeleted
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Spaceific.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Spaceific.Api.Models.Booking", b =>
+            modelBuilder.Entity("Booking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,24 +42,15 @@ namespace Spaceific.Api.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Purpose")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Room")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -71,7 +62,14 @@ namespace Spaceific.Api.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
 
@@ -82,14 +80,13 @@ namespace Spaceific.Api.Migrations
                             AllDay = false,
                             CreatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             End = new DateTime(2026, 2, 7, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Andi",
                             IsDeleted = false,
-                            LastName = "Pratama",
                             Purpose = "Rapat divisi IT",
-                            Room = "HH-203",
+                            RoomId = 2,
                             Start = new DateTime(2026, 2, 7, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Pending",
-                            UpdatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 2
                         },
                         new
                         {
@@ -97,14 +94,13 @@ namespace Spaceific.Api.Migrations
                             AllDay = false,
                             CreatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             End = new DateTime(2026, 2, 8, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Siti",
                             IsDeleted = false,
-                            LastName = "Aisyah",
                             Purpose = "Presentasi proyek PBL",
-                            Room = "B-304",
+                            RoomId = 4,
                             Start = new DateTime(2026, 2, 8, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Approved",
-                            UpdatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 2
                         },
                         new
                         {
@@ -112,14 +108,13 @@ namespace Spaceific.Api.Migrations
                             AllDay = false,
                             CreatedAt = new DateTime(2026, 2, 7, 13, 47, 18, 0, DateTimeKind.Unspecified),
                             End = new DateTime(2026, 2, 10, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Rina",
                             IsDeleted = false,
-                            LastName = "Kusuma",
                             Purpose = "Pelatihan editing video",
-                            Room = "SAW-0608",
+                            RoomId = 3,
                             Start = new DateTime(2026, 2, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Rejected",
-                            UpdatedAt = new DateTime(2026, 2, 7, 13, 47, 18, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2026, 2, 7, 13, 47, 18, 0, DateTimeKind.Unspecified),
+                            UserId = 2
                         });
                 });
 
@@ -198,6 +193,101 @@ namespace Spaceific.Api.Migrations
                             Name = "PS-0105",
                             UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0, 0, DateTimeKind.Unspecified)
                         });
+                });
+
+            modelBuilder.Entity("Spaceific.Api.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 2, 11, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Admin",
+                            LastName = "Spaceific",
+                            PasswordHash = "$2a$12$KeFN2k184BuqvUQgshTLROC4CPp6vLkTK.8Z/RBoOepPUAYU1/lTe",
+                            Role = "Admin",
+                            UpdatedAt = new DateTime(2026, 2, 11, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 2, 11, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "User",
+                            LastName = "Demo",
+                            PasswordHash = "$2a$12$BKl1PPsOhkmvqCXfOQ57A.Bzgql0zcND2voJBsEUS.fyGZanjmej2",
+                            Role = "User",
+                            UpdatedAt = new DateTime(2026, 2, 11, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "user"
+                        });
+                });
+
+            modelBuilder.Entity("Booking", b =>
+                {
+                    b.HasOne("Spaceific.Api.Models.Room", "Room")
+                        .WithMany("Bookings")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spaceific.Api.Models.User", "User")
+                        .WithMany("Bookings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Spaceific.Api.Models.Room", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("Spaceific.Api.Models.User", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

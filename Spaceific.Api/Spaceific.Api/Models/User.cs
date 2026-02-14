@@ -24,8 +24,9 @@ namespace Spaceific.Api.Models
         [Required]
         public string Role { get; set; } = "User";
 
-        public DateTime CreatedAt { get; set; }
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
-        public DateTime UpdatedAt { get; set;}
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

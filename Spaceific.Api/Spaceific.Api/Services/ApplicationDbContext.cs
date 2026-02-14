@@ -16,15 +16,24 @@ namespace Spaceific.Api.Services
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.User)
+                .WithMany(u => u.Bookings)
+                .HasForeignKey(b => b.UserId);
+
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Room)
+                .WithMany(r => r.Bookings)
+                .HasForeignKey(b => b.RoomId);
+
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Booking>().HasData(
                 new Booking
                 {
                     Id = 1,
-                    FirstName = "Andi",
-                    LastName = "Pratama",
-                    Room = "HH-203",
+                    UserId = 2,
+                    RoomId = 2,
                     Purpose = "Rapat divisi IT",
                     Start = new DateTime(2026, 2, 7, 9, 0, 0),
                     End = new DateTime(2026, 2, 7, 11, 0, 0),
@@ -37,9 +46,8 @@ namespace Spaceific.Api.Services
                 new Booking
                 {
                     Id = 2,
-                    FirstName = "Siti",
-                    LastName = "Aisyah",
-                    Room = "B-304",
+                    UserId = 2,
+                    RoomId = 4,
                     Purpose = "Presentasi proyek PBL",
                     Start = new DateTime(2026, 2, 8, 13, 0, 0),
                     End = new DateTime(2026, 2, 8, 15, 0, 0),
@@ -52,9 +60,8 @@ namespace Spaceific.Api.Services
                 new Booking
                 {
                     Id = 3,
-                    FirstName = "Rina",
-                    LastName = "Kusuma",
-                    Room = "SAW-0608",
+                    UserId = 2,
+                    RoomId = 3,
                     Purpose = "Pelatihan editing video",
                     Start = new DateTime(2026, 2, 10, 10, 0, 0),
                     End = new DateTime(2026, 2, 10, 12, 0, 0),
@@ -82,6 +89,7 @@ namespace Spaceific.Api.Services
                     Name = "HH-103",
                     Building = "D3",
                     Capacity = 30,
+                    IsDeleted = false,
                     CreatedAt = new DateTime(2026, 2, 11, 22, 52, 0),
                     UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
                 },
@@ -91,6 +99,7 @@ namespace Spaceific.Api.Services
                     Name = "SAW-0201",
                     Building = "SAW",
                     Capacity = 100,
+                    IsDeleted = false,
                     CreatedAt = new DateTime(2026, 2, 11, 22, 52, 0),
                     UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
                 },
@@ -100,6 +109,7 @@ namespace Spaceific.Api.Services
                     Name = "PS-0105",
                     Building = "Pascasarjana",
                     Capacity = 50,
+                    IsDeleted = false,
                     CreatedAt = new DateTime(2026, 2, 11, 22, 52, 0),
                     UpdatedAt = new DateTime(2026, 2, 11, 22, 52, 0)
                 }
