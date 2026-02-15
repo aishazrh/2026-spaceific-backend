@@ -1,20 +1,49 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Spaceific.Api.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// =======================
+// CONFIG DB
+// =======================
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseSqlServer(connectionString);
-}
-);
+});
 
+// =======================
+// JWT CONFIG
+// =======================
+var key = "INI_SECRET_KEY_PANJANG_BIAR_AMAN_123456";
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(key)
+        )
+    };
+});
+
+// =======================
+// SERVICES LAIN
+// =======================
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
 
 builder.Services.AddCors(options =>
 {
@@ -27,7 +56,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// =======================
+// PIPELINE
+// =======================
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -37,6 +68,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowReact");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -17,6 +17,8 @@ namespace Spaceific.Api.Models
         [Required]
         public int Capacity { get; set; }
 
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
         public bool IsDeleted { get; set; } = false;
 
         public DateTime CreatedAt { get; set; }

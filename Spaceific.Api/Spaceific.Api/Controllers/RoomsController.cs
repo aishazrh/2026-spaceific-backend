@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spaceific.Api.Models;
 using Spaceific.Api.Services;
@@ -16,6 +17,7 @@ namespace Spaceific.Api.Controllers
             this.context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetRooms()
         {
@@ -37,12 +39,16 @@ namespace Spaceific.Api.Controllers
             return Ok(room);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult CreateRoom(RoomDTO dto)
+        public IActionResult CreateRoom([FromBody] RoomDTO dto)
         {
+            Console.WriteLine("BUILDING = " + dto.Building);
+
             var room = new Room
             {
                 Name = dto.Name,
+                Building = dto.Building,
                 Capacity = dto.Capacity,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -54,14 +60,16 @@ namespace Spaceific.Api.Controllers
             return Ok(room);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public IActionResult UpdateRoom(int id, RoomDTO dto)
+        public IActionResult UpdateRoom(int id, [FromBody] RoomDTO dto)
         {
             var room = context.Rooms.FirstOrDefault(r => r.Id == id && !r.IsDeleted);
             if (room == null)
                 return NotFound();
 
             room.Name = dto.Name;
+            room.Building = dto.Building;
             room.Capacity = dto.Capacity;
             room.UpdatedAt = DateTime.UtcNow;
 
@@ -69,6 +77,7 @@ namespace Spaceific.Api.Controllers
             return Ok(room);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteRoom(int id)
         {
